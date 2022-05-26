@@ -24,18 +24,21 @@
         "src/typings/*"
       ],
       "@utils": [
-        "src/utils/index.ts"
+        "src/utils/"
       ],
       "@utils/*": [
         "src/utils/*"
       ]
     }
   },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": ["node_modules", "lib"],
   "linterOptions": {
     "exclude": [
       "node_modules",
       "lib"
     ]
-  },
-  "exclude": ["node_modules", "lib"]
+  }
 }

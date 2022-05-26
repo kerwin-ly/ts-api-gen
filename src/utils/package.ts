@@ -1,6 +1,8 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { getRelativePath, printError } from '@utils';
+import { getRelativePath } from './path';
+import { printError } from './print';
+// import { getRelativePath, printError } from '@utils';
 
 export function readJsonSync(jsonUrl: string) {
 	try {
