@@ -19,8 +19,7 @@ module.exports = {
 		json(),
 		typescript({
 			module: 'esnext',
-			exclude: ['./node_modules/**'],
-			sourceMap: true
+			exclude: ['./node_modules/**']
 		}),
 		resolve({
 			extensions: ['.js', '.ts', '.json'],
