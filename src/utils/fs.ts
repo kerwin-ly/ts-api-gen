@@ -1,5 +1,5 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
+import fs from 'fs-extra';
+import path from 'path';
 import { printError } from './print';
 
 export function readJsonSync(jsonUrl: string) {
@@ -19,6 +19,6 @@ export function writeJsonSync(jsonUrl: string, json: object): void {
 }
 
 export function getCliPkgJson() {
-	const pkgPath = path.resolve(__dirname, '../package.json');
+	const pkgPath = path.resolve(__dirname, '../../package.json');
 	return fs.readJsonSync(pkgPath);
 }

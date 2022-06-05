@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
+    "esModuleInterop": true,
     "baseUrl": "./",
     "declaration": true,
     "sourceMap": true,
@@ -11,14 +12,11 @@
     "types": ["node", "jest"],
     "noImplicitAny": true,
     "paths": {
-      "@api/*": [
-        "src/api/*"
-      ],
-      "@command/*": [
-        "src/command/*"
-      ],
       "@config/*": [
         "src/config/*"
+      ],
+      "@typings": [
+        "src/typings/"
       ],
       "@typings/*": [
         "src/typings/*"
