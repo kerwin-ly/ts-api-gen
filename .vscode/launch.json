@@ -16,8 +16,13 @@
         "NODE_ENV": "development",
         "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json"
       },
-      "args": ["${workspaceFolder}/src/main.ts"],
-      "cwd": "${workspaceFolder}"
+      "args": [
+        "${workspaceFolder}/src/main.ts"
+      ],
+      "cwd": "${workspaceRoot}",
+      "autoAttachChildProcesses": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "console": "integratedTerminal"
     },
     {
       "type": "node",

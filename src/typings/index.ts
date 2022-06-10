@@ -1,4 +1,4 @@
-export interface ApiGenConfig {
+export interface ApiGenOptions {
 	input: string;
 	output: string;
 }

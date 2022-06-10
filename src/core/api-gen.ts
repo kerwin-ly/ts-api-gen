@@ -1,33 +1,30 @@
-import { ApiGenConfig } from '@typings';
-import $RefParser, { HTTPResolverOptions } from '@apidevtools/json-schema-ref-parser';
+import { ApiGenOptions } from '@typings';
+import $RefParser from '@apidevtools/json-schema-ref-parser';
+import { printError } from '@utils/print';
 
 export class ApiGenerator {
-	constructor(public config: ApiGenConfig) {
-		// this.config = config;
-		console.log(this.config);
+	constructor(public swagger: object, public options: ApiGenOptions) {
+		console.log(this.swagger, this.options);
 	}
-	// 1. 遍历swagger.json文件
+
+	public run(): void {}
 }
 
-export async function runApiGen(options: ApiGenConfig) {
+export async function runApiGen(options: ApiGenOptions) {
 	const refParser = new $RefParser();
 	const input = options.input;
+
 	try {
-		const openApi = await refParser.bundle(input, {
+		const swagger = await refParser.bundle(input, {
 			dereference: {
 				circular: false
-			},
-			resolve: {
-				http: {
-					// timeout: options.fetchTimeout == null ? 20000 : options.fetchTimeout
-				} as HTTPResolverOptions
 			}
 		});
-		console.log('openapi', openApi);
-		// const gen = new ApiGenerator(openApi, options);
-		// gen.generate();
+		const apiGenerator = new ApiGenerator(swagger, options);
+
+		apiGenerator.run();
 	} catch (err) {
-		console.error(`Error on API generation from ${input}: ${err}`);
+		printError(`Error on Api generation from ${input}: ${err}`);
 		process.exit(1);
 	}
 }

@@ -1,0 +1,6330 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"title": "test",
+		"version": "last"
+	},
+	"basePath": "/",
+	"tags": [
+		{
+			"name": "user",
+			"description": "用户相关"
+		},
+		{
+			"name": "common",
+			"description": "其他"
+		},
+		{
+			"name": "news",
+			"description": "新闻模块"
+		},
+		{
+			"name": "email",
+			"description": null
+		},
+		{
+			"name": "tools",
+			"description": null
+		},
+		{
+			"name": "config",
+			"description": null
+		}
+	],
+	"schemes": [
+		"http"
+	],
+	"paths": {
+		"/api/v1/user/update_pwd": {
+			"put": {
+				"tags": [
+					"user"
+				],
+				"summary": "用户修改自己密码",
+				"description": "修改密码成功后，后端会对用户进行退出登录。前端需要重新进入登录页。",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/user/ApiV1UserUpdate_pwdPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/login": {
+			"post": {
+				"tags": [
+					"user"
+				],
+				"summary": "登录",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/user/ApiV1UserLoginPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									},
+									"title": "接口调用结果标识码",
+									"description": "接口调用结果标识码。200标识成功，-1失败。",
+									"default": "0"
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									},
+									"title": "提示消息",
+									"description": "提示消息"
+								},
+								"data": {
+									"$ref": "#/definitions/user/ResPostApiV1UserLogin"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/update": {
+			"put": {
+				"tags": [
+					"user"
+				],
+				"summary": "用户信息修改",
+				"description": "入参中的头像、姓名中至少填写一项进行修改。",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/user/ApiV1UserUpdatePutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "@integer"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "@string"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/user/ResPutApiV1UserUpdate"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/upload_avatar": {
+			"post": {
+				"tags": [
+					"user"
+				],
+				"summary": "上传头像",
+				"description": "头像的修改流程为：用户选择头像图片，后端进行压缩大小后，返回给前端图片id，当用户点击保存时，将id带上。",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"parameters": [
+					{
+						"name": "avatar",
+						"in": "formData",
+						"required": true,
+						"description": "用户选择的头像文件",
+						"type": "file"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "string",
+									"mock": {
+										"mock": "@integer"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/user/ResPostApiV1UserUpload_avatar"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/list": {
+			"get": {
+				"tags": [
+					"user"
+				],
+				"summary": "管理员查询用户",
+				"description": "",
+				"parameters": [
+					{
+						"name": "username",
+						"in": "query",
+						"required": false,
+						"description": "用户账号",
+						"type": "string"
+					},
+					{
+						"name": "name",
+						"in": "query",
+						"required": false,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": false,
+						"description": "枚举：1:启用。0:禁用, -1全部",
+						"type": "string"
+					},
+					{
+						"name": "role",
+						"in": "query",
+						"required": false,
+						"description": "枚举：角色：admin（管理员）、normal（普通用户）、all（全部）",
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": true,
+						"description": "页数",
+						"type": "string"
+					},
+					{
+						"name": "page_size",
+						"in": "query",
+						"required": true,
+						"description": "每页大小",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/user/ResGetApiV1UserList"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/reset_password": {
+			"post": {
+				"tags": [
+					"user"
+				],
+				"summary": "管理员重置用户密码",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/user/ApiV1UserReset_passwordPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/update_user": {
+			"put": {
+				"tags": [
+					"user"
+				],
+				"summary": "管理员修改用户信息",
+				"description": "成功后需要再次查询接口以刷新界面",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/user/ApiV1UserUpdate_userPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"msg": {
+									"type": "string"
+								},
+								"code": {
+									"type": "integer"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"msg",
+								"code",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/logout": {
+			"delete": {
+				"tags": [
+					"user"
+				],
+				"summary": "登出",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/add": {
+			"post": {
+				"tags": [
+					"user"
+				],
+				"summary": "管理员添加用户",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/user/ApiV1UserAddPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/remove": {
+			"delete": {
+				"tags": [
+					"user"
+				],
+				"summary": "删除用户",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "user_id",
+						"in": "query",
+						"required": true,
+						"description": "用户id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/common/total_counter": {
+			"get": {
+				"tags": [
+					"common"
+				],
+				"summary": "首页仪表盘总数统计接口",
+				"description": "首页的上半部分统计",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/common/ResGetApiV1CommonTotal_counter"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/common/latest_counter": {
+			"get": {
+				"tags": [
+					"common"
+				],
+				"summary": "首页仪表盘折线图统计",
+				"description": "",
+				"parameters": [
+					{
+						"name": "days",
+						"in": "query",
+						"required": true,
+						"description": "最近几天",
+						"type": "string"
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"required": true,
+						"description": "枚举：1（实时新闻）、2（历史新闻）、3（邮件）",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/common/ResGetApiV1CommonLatest_counter"
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/upload": {
+			"post": {
+				"tags": [
+					"news"
+				],
+				"summary": "上传word、pdf新闻文件",
+				"description": "pdf、word、pdf+word的混合zip均支持。后端根据文件属后缀区分。zip文件量大需要加进度条？",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"parameters": [
+					{
+						"name": "news_file",
+						"in": "formData",
+						"required": true,
+						"description": "新闻文件，可zip可pdf可word",
+						"type": "file"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResPostApiV1NewsUpload"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/upload_csv": {
+			"post": {
+				"tags": [
+					"news"
+				],
+				"summary": "上传新闻文件（csv）",
+				"description": "",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"parameters": [
+					{
+						"name": "csv_file",
+						"in": "formData",
+						"required": true,
+						"description": "csv文件",
+						"type": "file"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResPostApiV1NewsUpload_csv"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/download_report": {
+			"post": {
+				"tags": [
+					"news"
+				],
+				"summary": "下载报告",
+				"description": "传递用户勾选了的数据的id作为data\\_id\\_list，后端返回data\\_id\\_list中有报告的报告文件，并压缩为一个zip压缩包，并返回下载地址。",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/news/ApiV1NewsDownload_reportPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResPostApiV1NewsDownload_report"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news": {
+			"delete": {
+				"tags": [
+					"news"
+				],
+				"summary": "删除新闻数据",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "news_id",
+						"in": "query",
+						"required": true,
+						"description": "新闻数据id",
+						"type": "string"
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"required": true,
+						"description": "新闻类型：history、now",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/export_report": {
+			"post": {
+				"tags": [
+					"news"
+				],
+				"summary": "导出报告",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/news/ApiV1NewsExport_reportPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/situation": {
+			"get": {
+				"tags": [
+					"news"
+				],
+				"summary": "新闻态势",
+				"description": "{\n  \"code\": 200,\n  \"data\": {\n    \"中国\": {\n      \"area_type\": \"country\",\n      \"event_count\": 1,\n      \"lat\": 35.86166,\n      \"level\": 4,\n      \"long\": 104.195397\n    },\n    \"美国\": {\n      \"area_type\": \"country\",\n      \"event_count\": 1,\n      \"lat\": 37.09024,\n      \"level\": 4,\n      \"long\": -95.712891\n    }\n  },\n  \"msg\": \"\"\n}",
+				"parameters": [
+					{
+						"name": "time_start",
+						"in": "query",
+						"required": true,
+						"description": "事件发生的起始日期",
+						"type": "string"
+					},
+					{
+						"name": "time_end",
+						"in": "query",
+						"required": true,
+						"description": "事件发生的结束日期",
+						"type": "string"
+					},
+					{
+						"name": "map_type",
+						"in": "query",
+						"required": true,
+						"description": "枚举：1表示世界地图，2表示中国地图",
+						"type": "string"
+					},
+					{
+						"name": "event_type",
+						"in": "query",
+						"required": true,
+						"description": "事件类型",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResGetApiV1NewsSituation"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/do": {
+			"post": {
+				"tags": [
+					"news"
+				],
+				"summary": "新闻数据操作",
+				"description": "返回结果标识该次操作成功多少个，失败多少个。因为比如暂停操作，用户选择的100条数据在选择时候还未处理，但在提交那一刻，有5条已经处理了。已经处理了的5条不能暂停，于是系统会返回成功95，失败5.",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/news/ApiV1NewsDoPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResPostApiV1NewsDo"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/update_event": {
+			"put": {
+				"tags": [
+					"news"
+				],
+				"summary": "更新事件",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/news/ApiV1NewsUpdate_eventPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/event/detail": {
+			"get": {
+				"tags": [
+					"news"
+				],
+				"summary": "查询事件详情",
+				"description": "",
+				"parameters": [
+					{
+						"name": "event_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResGetApiV1NewsEventDetail"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/list": {
+			"get": {
+				"tags": [
+					"news"
+				],
+				"summary": "查询新闻",
+				"description": "对于新闻的失败原因的查询参数：\n历史新闻：1：解析失败，2：事件提取失败，3：入库失败。\n实时新闻：2：事件提取失败，3：入库失败。\n\n对于邮件失败原因查询参数：1：解析失败，2：分类失败，3：入库失败",
+				"parameters": [
+					{
+						"name": "status",
+						"in": "query",
+						"required": true,
+						"description": "数据状态：0（未处理）、1（正在处理）、2（处理完成）、3（已入库）、4（失败）",
+						"type": "string"
+					},
+					{
+						"name": "keyword",
+						"in": "query",
+						"required": false,
+						"description": "关键词",
+						"type": "string"
+					},
+					{
+						"name": "publish_time_start",
+						"in": "query",
+						"required": false,
+						"description": "发布时间范围开始",
+						"type": "string"
+					},
+					{
+						"name": "publish_time_end",
+						"in": "query",
+						"required": false,
+						"description": "发布时间范围结束",
+						"type": "string"
+					},
+					{
+						"name": "filename",
+						"in": "query",
+						"required": false,
+						"description": "新闻所属文件名",
+						"type": "string"
+					},
+					{
+						"name": "save_time_start",
+						"in": "query",
+						"required": false,
+						"description": "入库起始时间",
+						"type": "string"
+					},
+					{
+						"name": "save_time_end",
+						"in": "query",
+						"required": false,
+						"description": "入库结束时间",
+						"type": "string"
+					},
+					{
+						"name": "fail_step",
+						"in": "query",
+						"required": false,
+						"description": "失败原因、步骤",
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "page_size",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "exist_report",
+						"in": "query",
+						"required": false,
+						"description": "1（存在报告）0（不存在）-1（全部）",
+						"type": "string"
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"required": true,
+						"description": "枚举：history或者now",
+						"type": "string"
+					},
+					{
+						"name": "process_status",
+						"in": "query",
+						"required": false,
+						"description": "枚举：1：队列中、2：执行中、3：暂停",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResGetApiV1NewsList"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/event_type_list": {
+			"get": {
+				"tags": [
+					"news"
+				],
+				"summary": "获取事件类型列表（new）",
+				"description": "",
+				"parameters": [
+					{
+						"name": "query",
+						"in": "query",
+						"required": false,
+						"description": "支持关键词筛选",
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "支持分页，默认为1",
+						"type": "string"
+					},
+					{
+						"name": "page_size",
+						"in": "query",
+						"required": false,
+						"description": "支持分页，默认为100，如果前端不做分页，直接将此值设置为较大的数值，例如1000",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResGetApiV1NewsEvent_type_list"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/situation/event_list": {
+			"get": {
+				"tags": [
+					"news"
+				],
+				"summary": "获取区域事件列表",
+				"description": "",
+				"parameters": [
+					{
+						"name": "area_type",
+						"in": "query",
+						"required": true,
+						"description": "区域类型，枚举：country或province",
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "page_size",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "area_name",
+						"in": "query",
+						"required": true,
+						"description": "区域名称，如四川省。",
+						"type": "string"
+					},
+					{
+						"name": "globalLoading",
+						"in": "query",
+						"required": false,
+						"description": "前端控制全局loading使用",
+						"type": "string"
+					},
+					{
+						"name": "time_start",
+						"in": "query",
+						"required": true,
+						"description": "起始时间",
+						"type": "string"
+					},
+					{
+						"name": "time_end",
+						"in": "query",
+						"required": true,
+						"description": "结束时间",
+						"type": "string"
+					},
+					{
+						"name": "event_type",
+						"in": "query",
+						"required": false,
+						"description": "事件类型",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResGetApiV1NewsSituationEvent_list"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/graph": {
+			"get": {
+				"tags": [
+					"news"
+				],
+				"summary": "获取图谱信息（new）",
+				"description": "",
+				"parameters": [
+					{
+						"name": "start_date",
+						"in": "query",
+						"required": false,
+						"description": "日期范围：开始日期",
+						"type": "string"
+					},
+					{
+						"name": "end_date",
+						"in": "query",
+						"required": false,
+						"description": "日期范围：结束日期",
+						"type": "string"
+					},
+					{
+						"name": "event_type",
+						"in": "query",
+						"required": false,
+						"description": "事件类型",
+						"type": "string"
+					},
+					{
+						"name": "query",
+						"in": "query",
+						"required": false,
+						"description": "支持事件名称筛选，前端不支持此功能不填即可",
+						"type": "string"
+					},
+					{
+						"name": "max_event_num",
+						"in": "query",
+						"required": true,
+						"description": "由于事件数量众多，前端评估最多展示事件的数量，每个事件都包含有时间参与者和地点（可能多个）",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"title": "返回码",
+									"description": "正常是200",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResGetApiV1NewsGraph"
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/news/detail": {
+			"get": {
+				"tags": [
+					"news"
+				],
+				"summary": "获取文章正文详情（对应查看和事件审核）",
+				"description": "",
+				"parameters": [
+					{
+						"name": "news_id",
+						"in": "query",
+						"required": true,
+						"description": "文章id",
+						"type": "string"
+					},
+					{
+						"name": "need_event",
+						"in": "query",
+						"required": false,
+						"description": "是否需要事件解析结果",
+						"type": "string"
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"required": true,
+						"description": "history or now",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/news/ResGetApiV1NewsDetail"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/email/list": {
+			"get": {
+				"tags": [
+					"email"
+				],
+				"summary": "查询邮件",
+				"description": "",
+				"parameters": [
+					{
+						"name": "send_time_start",
+						"in": "query",
+						"required": false,
+						"description": "发送时间范围起始时间",
+						"type": "string"
+					},
+					{
+						"name": "send_time_end",
+						"in": "query",
+						"required": false,
+						"description": "发送时间范围结束时间",
+						"type": "string"
+					},
+					{
+						"name": "fail_step",
+						"in": "query",
+						"required": false,
+						"description": "失败原因（步骤），枚举：1（解析失败）、2（分类失败）3（入库失败）",
+						"type": "string"
+					},
+					{
+						"name": "keyword",
+						"in": "query",
+						"required": false,
+						"description": "关键词",
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "page_size",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": true,
+						"description": "数据状态：0（未处理）、1（正在处理）、2（处理完成）、3（已入库）、4（失败）",
+						"type": "string"
+					},
+					{
+						"name": "save_time_start",
+						"in": "query",
+						"required": false,
+						"description": "入库起始时间",
+						"type": "string"
+					},
+					{
+						"name": "save_time_end",
+						"in": "query",
+						"required": false,
+						"description": "入库结束时间",
+						"type": "string"
+					},
+					{
+						"name": "filename",
+						"in": "query",
+						"required": false,
+						"description": "文件名",
+						"type": "string"
+					},
+					{
+						"name": "process_status",
+						"in": "query",
+						"required": false,
+						"description": "处理状态：1：队列中、2：处理中、3：暂停",
+						"type": "string"
+					},
+					{
+						"name": "category",
+						"in": "query",
+						"required": false,
+						"description": "分类：空字符串表示所有，“0”表示垃圾邮件，其余分类根据查询邮件的分类列表获取。",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/email/ResGetApiV1EmailList"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/email/do": {
+			"post": {
+				"tags": [
+					"email"
+				],
+				"summary": "邮件数据操作",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/email/ApiV1EmailDoPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/email/ResPostApiV1EmailDo"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/email/detail": {
+			"get": {
+				"tags": [
+					"email"
+				],
+				"summary": "获取邮件详情",
+				"description": "",
+				"parameters": [
+					{
+						"name": "email_id",
+						"in": "query",
+						"required": true,
+						"description": "邮件id",
+						"type": "string"
+					},
+					{
+						"name": "need_analysis_result",
+						"in": "query",
+						"required": true,
+						"description": "是否需要解析结果",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/email/ResGetApiV1EmailDetail"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/email/update_analysis_result": {
+			"put": {
+				"tags": [
+					"email"
+				],
+				"summary": "修改分类结果",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/email/ApiV1EmailUpdate_analysis_resultPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/email": {
+			"delete": {
+				"tags": [
+					"email"
+				],
+				"summary": "删除邮件数据",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "email_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/email/upload": {
+			"post": {
+				"tags": [
+					"email"
+				],
+				"summary": "上传邮件压缩包",
+				"description": "",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"parameters": [
+					{
+						"name": "email_file",
+						"in": "formData",
+						"required": true,
+						"description": "邮件压缩包",
+						"type": "file"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer"
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/email/ResPostApiV1EmailUpload"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/topic": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "主题分类",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsTopicPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsTopic"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/event": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "事件分析",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsEventPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsEvent"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/event_batch": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "事件分析（批量）",
+				"description": "",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"parameters": [
+					{
+						"name": "file_count",
+						"in": "formData",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "file1",
+						"in": "formData",
+						"required": true,
+						"description": "",
+						"type": "file"
+					},
+					{
+						"name": "file2",
+						"in": "formData",
+						"required": true,
+						"description": "",
+						"type": "file"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsEvent_batch"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/entity": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "实体识别",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsEntityPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsEntity"
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/sentiment": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "情感分析",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsSentimentPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsSentiment"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/category": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "文本分类",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsCategoryPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsCategory"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/abstract": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "文章摘要",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsAbstractPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsAbstract"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/translate": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "获取翻译结果",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsTranslatePostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsTranslate"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tools/word_frequency": {
+			"post": {
+				"tags": [
+					"tools"
+				],
+				"summary": "词频统计",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/tools/ApiV1ToolsWord_frequencyPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/tools/ResPostApiV1ToolsWord_frequency"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/config/joiner": {
+			"put": {
+				"tags": [
+					"config"
+				],
+				"summary": "修改参与者配置",
+				"description": "2020-12-30更新：删除入参经纬度",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigJoinerPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"config"
+				],
+				"summary": "删除参与者配置",
+				"description": "",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"parameters": [
+					{
+						"name": "data_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"config"
+				],
+				"summary": "新增参与者配置",
+				"description": "2020-12-30日变更：删除经纬度入参",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigJoinerPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "查询参与者配置",
+				"description": "2020-12-30更新：删除经纬度返回参数",
+				"parameters": [
+					{
+						"name": "search",
+						"in": "query",
+						"required": true,
+						"description": "搜索名称",
+						"type": "string"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "page_size",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/config/ResGetApiV1ConfigJoiner"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/config/email_category": {
+			"post": {
+				"tags": [
+					"config"
+				],
+				"summary": "新增邮件分类",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigEmail_categoryPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "查询邮件分类名称列表",
+				"description": "",
+				"parameters": [
+					{
+						"name": "keyword",
+						"in": "query",
+						"required": false,
+						"description": "",
+						"type": "string"
+					},
+					{
+						"name": "globalLoading",
+						"in": "query",
+						"required": false,
+						"description": "前端工具代码生成需要 ，控制loading状态",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string",
+									"mock": {
+										"mock": "success"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/config/ResGetApiV1ConfigEmail_category"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"config"
+				],
+				"summary": "修改邮件分类名称",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigEmail_categoryPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"config"
+				],
+				"summary": "删除邮件分类",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "category_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/config/email_category_keywords": {
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "获取邮件分类对应关键词",
+				"description": "",
+				"parameters": [
+					{
+						"name": "category_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/config/ResGetApiV1ConfigEmail_category_keywords"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"config"
+				],
+				"summary": "更新分类关键词",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigEmail_category_keywordsPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/config/news_import_path": {
+			"post": {
+				"tags": [
+					"config"
+				],
+				"summary": "新增新闻导入配置",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigNews_import_pathPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "获取新闻导入配置",
+				"description": "",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/config/ResGetApiV1ConfigNews_import_path"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"config"
+				],
+				"summary": "更新新闻导入配置",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigNews_import_pathPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {},
+									"required": []
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"config"
+				],
+				"summary": "删除新闻导入配置",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "data_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/config/dictionary": {
+			"post": {
+				"tags": [
+					"config"
+				],
+				"summary": "添加自定义词库",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigDictionaryPostParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"config"
+				],
+				"summary": "删除自定义词库",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "data_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "integer",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {}
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "查询自定义词库名称列表",
+				"description": "",
+				"parameters": [
+					{
+						"name": "keyword",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"$ref": "#/definitions/config/ResGetApiV1ConfigDictionary"
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"config"
+				],
+				"summary": "修改自定义词库名称",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigDictionaryPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {},
+									"required": []
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/config/dictionary_keywords": {
+			"get": {
+				"tags": [
+					"config"
+				],
+				"summary": "获取自定义词库对应关键词",
+				"description": "",
+				"parameters": [
+					{
+						"name": "category_id",
+						"in": "query",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"msg": {
+									"type": "string"
+								},
+								"data": {
+									"$ref": "#/definitions/config/ResGetApiV1ConfigDictionary_keywords"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"config"
+				],
+				"summary": "更新自定义词库关键词",
+				"description": "",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"$ref": "#/definitions/config/ApiV1ConfigDictionary_keywordsPutParams"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "number",
+									"mock": {
+										"mock": "200"
+									}
+								},
+								"data": {
+									"type": "object",
+									"properties": {},
+									"required": []
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"data",
+								"msg"
+							]
+						}
+					}
+				}
+			}
+		},
+		"http://api-lzzz-event-analysis.datagrand.com/classify/theme": {
+			"post": {
+				"tags": [
+					"third_part"
+				],
+				"summary": "主题分类（联系人：王子豪）",
+				"description": "返回样例：\n{\n    \"status\": \"OK\",\n    \"cost\": 0.0856,\n    \"result\": {\n        \"bug\": 0.3548,\n        \"clickjacking\": 0.0968,\n        \"botnet\": 0.3065,\n        \"DDoS Attack\": 0.2419\n    }\n}",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"content": {
+									"type": "string"
+								},
+								"lang": {
+									"type": "string",
+									"description": "zh/en"
+								}
+							},
+							"required": [
+								"content",
+								"lang"
+							]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"status": {
+									"type": "string"
+								},
+								"cost": {
+									"type": "number"
+								},
+								"result": {
+									"type": "object",
+									"properties": {},
+									"description": "见样例"
+								}
+							},
+							"required": [
+								"status",
+								"cost",
+								"result"
+							]
+						}
+					}
+				}
+			}
+		},
+		"http://api-lzzz-event-analysis.datagrand.com/classify/event": {
+			"post": {
+				"tags": [
+					"third_part"
+				],
+				"summary": "事件分类（联系人：王子豪）",
+				"description": "返回样例：\n{\n    \"status\": \"OK\",\n    \"cost\": 0.082,\n    \"result\": {\n        \"高危漏洞威胁\": 0.3654,\n        \"技术装备\": 0.4423,\n        \"能力建设\": 0.1923\n    }\n}",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"content": {
+									"type": "string",
+									"description": "文章正文"
+								},
+								"lang": {
+									"type": "string",
+									"description": "文章语言（zh或en）"
+								}
+							},
+							"required": [
+								"content",
+								"lang"
+							]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"status": {
+									"type": "string"
+								},
+								"cost": {
+									"type": "number"
+								},
+								"result": {
+									"type": "object",
+									"properties": {},
+									"description": "见下方备注"
+								}
+							},
+							"required": [
+								"status",
+								"cost",
+								"result"
+							]
+						}
+					}
+				}
+			}
+		},
+		"http://api-lzzz-event-analysis.datagrand.com/extract/event": {
+			"post": {
+				"tags": [
+					"third_part"
+				],
+				"summary": "事件提取（联系人：王子豪）",
+				"description": "返回样例：\n{\n    \"status\": \"OK\",\n    \"cost\": 46.5255,\n    \"result\": {\n        \"event_time\": \"26th June 2020\",\n        \"event\\_joiner\\_list\": \\[\n            {\n                \"name\": \"\",\n                \"org_name\": \"the World Health Organization\",\n                \"country\": \"\"\n            }\n        ],\n        \"event_emotion\": {\n            \"positive\": 0.2701,\n            \"negative\": 0.7299\n        },\n        \"event_impact\": -6,\n        \"event_type\": \"能力建设\"\n    }\n}",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"content": {
+									"type": "string"
+								},
+								"lang": {
+									"type": "string",
+									"description": "zh/en"
+								}
+							},
+							"required": [
+								"content",
+								"lang"
+							]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"status": {
+									"type": "string"
+								},
+								"cost": {
+									"type": "number"
+								},
+								"result": {
+									"type": "object",
+									"properties": {
+										"event_time": {
+											"type": "string",
+											"description": "事件时间"
+										},
+										"event_impact": {
+											"type": "string",
+											"description": "事件可信度"
+										},
+										"event_address": {
+											"type": "string",
+											"description": "事件地址"
+										},
+										"event_type": {
+											"type": "string",
+											"description": "事件类型"
+										},
+										"event_emotion": {
+											"type": "object",
+											"properties": {
+												"positive": {
+													"type": "number"
+												},
+												"negative": {
+													"type": "number"
+												}
+											},
+											"description": "事件情感",
+											"required": [
+												"positive",
+												"negative"
+											]
+										},
+										"event_joiner_list": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"name": {
+														"type": "string",
+														"description": "名称"
+													},
+													"org_name": {
+														"type": "string",
+														"description": "机构名称"
+													},
+													"country": {
+														"type": "string",
+														"description": "国家"
+													}
+												}
+											}
+										}
+									},
+									"required": [
+										"event_time",
+										"event_impact",
+										"event_type",
+										"event_emotion",
+										"event_joiner_list",
+										"event_address"
+									]
+								}
+							},
+							"required": [
+								"status",
+								"cost",
+								"result"
+							]
+						}
+					}
+				}
+			}
+		},
+		"http://ip:port/Itrans/onlinetrans/tourist": {
+			"post": {
+				"tags": [
+					"third_part"
+				],
+				"summary": "翻译接口（客户提供）",
+				"description": "该接口根据客户文档添加，且目前没有环境可以联调，所以文档可能不正确。详情见如下客户文档。\n\n1.1.1 ****文本翻译接口**<span class=\"size\"></span>**\n\n#### 1.1.1.1 ****调用方式说明******<span class=\"size\"></span>**\n\n|  |  |\n| --- | --- |\n| 方法名<span class=\"size\"></span> | translate<span class=\"size\"></span> |\n| 请求方式<span class=\"size\"></span> | POST<span class=\"size\"></span> |\n| URL实例<span class=\"size\"></span> | [http://ip](http://ip):port/Itrans/onlinetrans/{type}<span class=\"size\"></span> |\n\n#### 1.1.1.2 ****输入参数说明******<span class=\"size\"></span>**\n\n|  |  |  |  |\n| --- | --- | --- | --- |\n| 输入参数类型<span class=\"size\"></span> | Json<span class=\"size\"></span> |  |  |\n| 参数列表<span class=\"size\"></span> | 参数名<span class=\"size\"></span> | 类型<span class=\"size\"></span> | 说明<span class=\"size\"></span> |\n| content<span class=\"size\"></span> | String<span class=\"size\"></span> | 翻译内容<span class=\"size\"></span> |  |\n| showHotwords<span class=\"size\"></span> | Boolean<span class=\"size\"></span> | 是否显示关键词<span class=\"size\"></span> |  |\n|   | sourceLanguage<span class=\"size\"></span> | String<span class=\"size\"></span> | 源语言类型<span class=\"size\"></span> |\n|   | targetLanguage<span class=\"size\"></span> | String<span class=\"size\"></span> | 目标语言类型<span class=\"size\"></span> |\n|   | type<span class=\"size\"></span> | String<span class=\"size\"></span> | 翻译方向<span class=\"size\"></span> |\n|   | userId<span class=\"size\"></span> | String<span class=\"size\"></span> | 用户id<span class=\"size\"></span> |\n|   | {type}<span class=\"size\"></span> | String<span class=\"size\"></span> | 用于拦截请求，“itrans”代表登录模式，“tourist”代表游客模式 <span class=\"size\"></span> |\n\n#### 1.1.1.3 ****输出参数说明******<span class=\"size\"></span>**\n\n|  |  |  |  |\n| --- | --- | --- | --- |\n| 返回值类型<span class=\"size\"></span> | Json<span class=\"size\"></span> |  |  |\n| 参数列表<span class=\"size\"></span>  | 参数名<span class=\"size\"></span> | 类型<span class=\"size\"></span> | 说明<span class=\"size\"></span> |\n| state<span class=\"size\"></span> | SampleState<span class=\"size\"></span> | 合成参数状态类<span class=\"size\"></span> |  |\n| body<span class=\"size\"></span> | ItransActionResult<span class=\"size\"></span> | 在线翻译响应消息体<span class=\"size\"></span> |  |",
+				"consumes": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "params",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"content": {
+									"type": "string",
+									"description": "翻译原文"
+								},
+								"showHotwords": {
+									"type": "string",
+									"description": "是否显示关键词"
+								},
+								"sourceLanguage": {
+									"type": "string",
+									"description": "源语言类型"
+								},
+								"targetLanguage": {
+									"type": "string",
+									"description": "目标语言类型"
+								},
+								"type": {
+									"type": "string",
+									"description": "翻译方向"
+								},
+								"userId": {
+									"type": "string",
+									"description": "用户id"
+								}
+							},
+							"required": [
+								"content",
+								"showHotwords",
+								"sourceLanguage",
+								"targetLanguage",
+								"userId",
+								"type"
+							]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"state": {
+									"type": "string"
+								},
+								"body": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"state",
+								"body"
+							]
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/email_classify": {
+			"post": {
+				"tags": [
+					"third_part"
+				],
+				"summary": "邮件分类（联系人：文敏）",
+				"description": "该接口是由文敏提供给业务后端调用的接口。\n\n分类配置根据redis中的配置进行共享。\nredis的key以及样例如下（json直接load改key对应的值即可）：\n![image.png](data:image/png;base64,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)\n\n<br>\nis_spam为0表示是垃圾邮件，否则不是垃圾邮件",
+				"consumes": [
+					"multipart/form-data"
+				],
+				"parameters": [
+					{
+						"name": "content",
+						"in": "formData",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "lang",
+						"in": "formData",
+						"required": true,
+						"description": "",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "object",
+							"title": "title",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"is_spam": {
+											"type": "boolean",
+											"description": "是否为垃圾邮件"
+										},
+										"categories": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"description": "分类字符串"
+											},
+											"description": "非垃圾邮件的分类字符串列表"
+										}
+									},
+									"required": [
+										"is_spam",
+										"categories"
+									]
+								},
+								"msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"msg",
+								"data"
+							]
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"user": {
+			"ApiV1UserUpdate_pwdPutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"origin_password": {
+						"type": "string",
+						"description": "原密码"
+					},
+					"new_password": {
+						"type": "string",
+						"description": "新密码"
+					}
+				},
+				"required": [
+					"origin_password",
+					"new_password"
+				]
+			},
+			"ApiV1UserLoginPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"username": {
+						"type": "string",
+						"mock": {
+							"mock": "@email"
+						},
+						"title": "账户名称"
+					},
+					"password": {
+						"type": "string",
+						"mock": {
+							"mock": "@string"
+						},
+						"title": "密码"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				]
+			},
+			"ResPostApiV1UserLogin": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"type": "string",
+						"mock": {
+							"mock": "@string"
+						},
+						"title": "后续鉴权token",
+						"description": "后续其他要求登录才能调用的接口均需要带上"
+					},
+					"name": {
+						"type": "string",
+						"mock": {
+							"mock": "@name"
+						},
+						"description": "用户姓名"
+					},
+					"avatar_url": {
+						"type": "string",
+						"mock": {
+							"mock": "@image"
+						},
+						"description": "头像url"
+					},
+					"role": {
+						"type": "string",
+						"mock": {
+							"mock": "@string"
+						},
+						"description": "角色，普通用户不展示用户管理菜单。"
+					}
+				},
+				"title": "业务数据",
+				"required": [
+					"token",
+					"name",
+					"avatar_url",
+					"role"
+				],
+				"description": "业务数据"
+			},
+			"ApiV1UserUpdatePutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"avatar_url": {
+						"type": "string",
+						"mock": {
+							"mock": "@url"
+						},
+						"default": "",
+						"description": "头像url"
+					},
+					"name": {
+						"type": "string",
+						"description": "姓名"
+					}
+				},
+				"required": []
+			},
+			"ResPutApiV1UserUpdate": {
+				"type": "object",
+				"properties": {
+					"avatar_url": {
+						"type": "string",
+						"mock": {
+							"mock": "@url"
+						},
+						"description": "头像url"
+					},
+					"name": {
+						"type": "string",
+						"mock": {
+							"mock": "@string"
+						}
+					}
+				},
+				"required": [
+					"avatar_url",
+					"name"
+				]
+			},
+			"ResPostApiV1UserUpload_avatar": {
+				"type": "object",
+				"properties": {
+					"avatar_url": {
+						"type": "string",
+						"mock": {
+							"mock": "@string"
+						},
+						"description": "图片url"
+					}
+				},
+				"required": [
+					"avatar_url"
+				]
+			},
+			"ResGetApiV1UserList": {
+				"type": "object",
+				"properties": {
+					"users": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"username": {
+									"type": "string",
+									"mock": {
+										"mock": "@url"
+									}
+								},
+								"id": {
+									"type": "integer",
+									"description": "用户id",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"name": {
+									"type": "string",
+									"mock": {
+										"mock": "@cname"
+									}
+								},
+								"status": {
+									"type": "integer",
+									"description": "1:启用。0:禁用",
+									"mock": {
+										"mock": "1"
+									}
+								},
+								"role": {
+									"type": "string",
+									"description": "角色：admin（管理员）和normal（普通用户）两类值。",
+									"enum": [
+										"admin",
+										"normal"
+									]
+								}
+							},
+							"required": [
+								"username",
+								"role",
+								"status",
+								"name",
+								"id"
+							]
+						}
+					},
+					"total": {
+						"type": "integer",
+						"description": "总数据量",
+						"mock": {
+							"mock": "@natural"
+						}
+					}
+				},
+				"required": [
+					"users",
+					"total"
+				]
+			},
+			"ApiV1UserReset_passwordPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"user_id": {
+						"type": "integer",
+						"description": "用户id"
+					}
+				},
+				"required": [
+					"user_id"
+				]
+			},
+			"ApiV1UserUpdate_userPutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"user_id": {
+						"type": "integer"
+					},
+					"status": {
+						"type": "integer"
+					},
+					"role": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"user_id",
+					"role",
+					"status"
+				]
+			},
+			"ApiV1UserAddPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"username": {
+						"type": "string",
+						"description": "账号"
+					},
+					"name": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string",
+						"description": "admin/normal"
+					}
+				},
+				"required": [
+					"username",
+					"password",
+					"name",
+					"role"
+				]
+			}
+		},
+		"common": {
+			"ResGetApiV1CommonTotal_counter": {
+				"type": "object",
+				"properties": {
+					"history_news": {
+						"type": "object",
+						"properties": {
+							"untreated": {
+								"type": "integer",
+								"description": "未处理数",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"doing": {
+								"type": "integer",
+								"description": "处理中",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"over": {
+								"type": "integer",
+								"description": "处理完成",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"saved": {
+								"type": "integer",
+								"description": "已入库",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"fail": {
+								"type": "integer",
+								"description": "失败数",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							}
+						},
+						"required": [
+							"untreated",
+							"fail",
+							"saved",
+							"over",
+							"doing"
+						]
+					},
+					"realtime_news": {
+						"type": "object",
+						"properties": {
+							"untreated": {
+								"type": "integer",
+								"description": "未处理数",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"doing": {
+								"type": "integer",
+								"description": "处理中",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"over": {
+								"type": "integer",
+								"description": "处理完成",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"saved": {
+								"type": "integer",
+								"description": "已入库",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"fail": {
+								"type": "integer",
+								"description": "失败数",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							}
+						},
+						"required": [
+							"untreated",
+							"fail",
+							"saved",
+							"over",
+							"doing"
+						]
+					},
+					"email": {
+						"type": "object",
+						"properties": {
+							"untreated": {
+								"type": "integer",
+								"description": "未处理数",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"doing": {
+								"type": "integer",
+								"description": "处理中",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"over": {
+								"type": "integer",
+								"description": "处理完成",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"saved": {
+								"type": "integer",
+								"description": "已入库",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							},
+							"fail": {
+								"type": "integer",
+								"description": "失败数",
+								"mock": {
+									"mock": "@integer(1,10000)"
+								}
+							}
+						},
+						"required": [
+							"untreated",
+							"fail",
+							"saved",
+							"over",
+							"doing"
+						]
+					}
+				},
+				"required": [
+					"history_news",
+					"realtime_news",
+					"email"
+				]
+			},
+			"ResGetApiV1CommonLatest_counter": {
+				"type": "object",
+				"properties": {
+					"list": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"fail": {
+									"type": "integer",
+									"description": "失败",
+									"mock": {
+										"mock": "@integer(1,50)"
+									}
+								},
+								"over": {
+									"type": "integer",
+									"description": "处理完成",
+									"mock": {
+										"mock": "@integer(1,50)"
+									}
+								},
+								"import": {
+									"type": "integer",
+									"description": "导入",
+									"mock": {
+										"mock": "@integer(1,100)"
+									}
+								},
+								"date": {
+									"type": "string",
+									"mock": {
+										"mock": "2020-09-09"
+									},
+									"description": "数据日期"
+								}
+							},
+							"required": [
+								"fail",
+								"import",
+								"over",
+								"date"
+							]
+						},
+						"minItems": 7,
+						"maxItems": 7,
+						"uniqueItems": true
+					}
+				},
+				"required": [
+					"list"
+				]
+			}
+		},
+		"news": {
+			"ResPostApiV1NewsUpload": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "integer"
+					},
+					"fail": {
+						"type": "integer"
+					}
+				},
+				"required": [
+					"success",
+					"fail"
+				]
+			},
+			"ResPostApiV1NewsUpload_csv": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "integer"
+					},
+					"fail": {
+						"type": "integer"
+					}
+				},
+				"required": [
+					"success",
+					"fail"
+				]
+			},
+			"ApiV1NewsDownload_reportPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"data_id_list": {
+						"type": "array",
+						"items": {
+							"type": "integer"
+						},
+						"description": "需要导出的报告的id列表"
+					},
+					"type": {
+						"type": "string",
+						"description": "类型：now（实时）、history（历史）"
+					}
+				},
+				"required": [
+					"data_id_list",
+					"type"
+				]
+			},
+			"ResPostApiV1NewsDownload_report": {
+				"type": "object",
+				"properties": {
+					"download_url": {
+						"type": "string",
+						"description": "报告下载地址"
+					}
+				},
+				"required": [
+					"download_url"
+				]
+			},
+			"ApiV1NewsExport_reportPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"data_id_list": {
+						"type": "array",
+						"items": {
+							"type": "integer"
+						}
+					},
+					"type": {
+						"type": "string",
+						"description": "now、history"
+					}
+				},
+				"required": [
+					"data_id_list",
+					"type"
+				]
+			},
+			"ResGetApiV1NewsSituation": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "object",
+						"properties": {
+							"area_type": {
+								"type": "string",
+								"description": "地区类型，枚举：country或province"
+							},
+							"long": {
+								"type": "number",
+								"description": "经度"
+							},
+							"lat": {
+								"type": "string",
+								"description": "纬度"
+							},
+							"event_count": {
+								"type": "string",
+								"description": "事件数量"
+							},
+							"level": {
+								"type": "integer",
+								"description": "等级。1-4个级别，根据此数据展示不同颜色。"
+							}
+						},
+						"required": [
+							"long",
+							"lat",
+							"event_count",
+							"level",
+							"area_type"
+						],
+						"description": "地区名称"
+					}
+				},
+				"required": [
+					"name"
+				]
+			},
+			"ApiV1NewsDoPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"action": {
+						"type": "string",
+						"description": "动作，操作：handle（开始解析）、pause（暂停）、continue（继续）、revoke（暂不处理）、save（入库）"
+					},
+					"data_id_list": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"description": "数据id"
+						},
+						"description": "勾选的数据id列表"
+					},
+					"type": {
+						"type": "string",
+						"description": "history or now"
+					}
+				},
+				"required": [
+					"action",
+					"type",
+					"data_id_list"
+				]
+			},
+			"ResPostApiV1NewsDo": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "integer",
+						"description": "操作成功数"
+					},
+					"fail": {
+						"type": "integer",
+						"description": "操作失败数"
+					}
+				},
+				"required": [
+					"success",
+					"fail"
+				]
+			},
+			"ApiV1NewsUpdate_eventPutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"news_id": {
+						"type": "integer",
+						"description": "新闻id"
+					},
+					"type": {
+						"type": "string",
+						"description": "history or now"
+					},
+					"event": {
+						"type": "object",
+						"properties": {
+							"event_id": {
+								"type": "string",
+								"description": "事件id，更新时候使用传入此id",
+								"mock": {
+									"mock": "@string"
+								}
+							},
+							"joiner": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"description": "参与者名称"
+										},
+										"country": {
+											"type": "string"
+										},
+										"country_code": {
+											"type": "string"
+										},
+										"org_name": {
+											"type": "string"
+										},
+										"org_code": {
+											"type": "string"
+										},
+										"longitude": {
+											"type": "number"
+										},
+										"latitude": {
+											"type": "number"
+										},
+										"role": {
+											"type": "string"
+										},
+										"full_address": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"name",
+										"country",
+										"country_code",
+										"org_name",
+										"org_code",
+										"longitude",
+										"latitude",
+										"full_address",
+										"role"
+									]
+								},
+								"description": "参与者"
+							},
+							"theme": {
+								"type": "string",
+								"description": "主题（领域知识）"
+							},
+							"event_type": {
+								"type": "string",
+								"description": "事件类型"
+							},
+							"emotion_positive": {
+								"type": "number",
+								"description": "情感积极得分"
+							},
+							"event_time": {
+								"type": "string",
+								"description": "事件时间yyyy-mm-dd",
+								"title": "2020-02-29"
+							},
+							"event_country": {
+								"type": "string",
+								"description": "事件发生国家"
+							},
+							"event_address": {
+								"type": "string",
+								"description": "事件地址"
+							}
+						},
+						"description": "事件详情，need_event为false时，对象为{}",
+						"required": [
+							"event_id",
+							"joiner",
+							"event_type",
+							"theme",
+							"emotion_positive",
+							"event_time",
+							"event_country",
+							"event_address"
+						]
+					}
+				},
+				"required": [
+					"news_id",
+					"event",
+					"type"
+				]
+			},
+			"ResGetApiV1NewsEventDetail": {
+				"type": "object",
+				"properties": {
+					"event_id": {
+						"type": "string",
+						"description": "事件id，更新时候使用传入此id",
+						"mock": {
+							"mock": "@string"
+						}
+					},
+					"abstract": {
+						"type": "string",
+						"description": "摘要"
+					},
+					"joiner": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"description": "参与者名称"
+								},
+								"country": {
+									"type": "string"
+								},
+								"country_code": {
+									"type": "string"
+								},
+								"org_name": {
+									"type": "string"
+								},
+								"org_code": {
+									"type": "string"
+								},
+								"longitude": {
+									"type": "number"
+								},
+								"latitude": {
+									"type": "number"
+								},
+								"role": {
+									"type": "string"
+								},
+								"full_address": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"name",
+								"country",
+								"country_code",
+								"org_name",
+								"org_code",
+								"longitude",
+								"latitude",
+								"full_address",
+								"role"
+							]
+						},
+						"description": "参与者"
+					},
+					"theme": {
+						"type": "string",
+						"description": "主题（领域知识）"
+					},
+					"event_type": {
+						"type": "string",
+						"description": "事件类型"
+					},
+					"emotion_positive": {
+						"type": "number",
+						"description": "情感积极得分"
+					},
+					"event_time": {
+						"type": "string",
+						"description": "事件时间yyyy-mm-dd",
+						"title": "2020-02-29"
+					},
+					"event_country": {
+						"type": "string",
+						"description": "事件发生国家"
+					},
+					"event_address": {
+						"type": "string",
+						"description": "事件地址"
+					},
+					"title": {
+						"type": "string",
+						"description": "新闻标题（事件名称）"
+					},
+					"long": {
+						"type": "number"
+					},
+					"lat": {
+						"type": "number"
+					}
+				},
+				"description": "事件详情，need_event为false时，对象为{}",
+				"required": [
+					"event_id",
+					"joiner",
+					"event_type",
+					"theme",
+					"emotion_positive",
+					"event_time",
+					"event_country",
+					"event_address",
+					"title",
+					"abstract",
+					"lat",
+					"long"
+				]
+			},
+			"ResGetApiV1NewsList": {
+				"type": "object",
+				"properties": {
+					"total": {
+						"type": "integer",
+						"description": "总数据量",
+						"mock": {
+							"mock": "@natural"
+						}
+					},
+					"news_list": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"title": {
+									"type": "string",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"content": {
+									"type": "string",
+									"description": "正文前N个字符",
+									"mock": {
+										"mock": "@cparagraph"
+									}
+								},
+								"publish_time": {
+									"type": "string",
+									"description": "发布时间",
+									"mock": {
+										"mock": "@date"
+									}
+								},
+								"filename": {
+									"type": "string",
+									"description": "数据所属文件名",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"id": {
+									"type": "integer",
+									"description": "数据id",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"exist_report": {
+									"type": "boolean",
+									"description": "是否存在报告true:存在，false:不存在",
+									"mock": {
+										"mock": "@boolean"
+									}
+								},
+								"process_status": {
+									"type": "number",
+									"description": "处理状态，枚举1：队列中，2：处理中，3：暂停中",
+									"enum": [
+										1,
+										2,
+										3
+									]
+								},
+								"save_es_time": {
+									"type": "string",
+									"description": "入库时间",
+									"mock": {
+										"mock": "@datetime"
+									}
+								},
+								"fail_step": {
+									"type": "integer",
+									"description": "失败原因、步骤。枚举值：3（事件提取失败）4（入库失败）",
+									"enum": [
+										0,
+										1,
+										2,
+										3
+									]
+								}
+							},
+							"required": [
+								"title",
+								"filename",
+								"publish_time",
+								"content",
+								"id",
+								"exist_report",
+								"process_status",
+								"save_es_time",
+								"fail_step"
+							]
+						},
+						"minItems": 10,
+						"maxItems": 10
+					}
+				},
+				"required": [
+					"total",
+					"news_list"
+				]
+			},
+			"ResGetApiV1NewsEvent_type_list": {
+				"type": "object",
+				"properties": {
+					"total": {
+						"type": "integer",
+						"title": "总数量",
+						"mock": {
+							"mock": "10"
+						}
+					},
+					"event_type_list": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"title": "事件类型名称",
+							"mock": {
+								"mock": "@ctitle"
+							}
+						},
+						"minItems": 10,
+						"maxItems": 10
+					}
+				},
+				"required": [
+					"total",
+					"event_type_list"
+				]
+			},
+			"ResGetApiV1NewsSituationEvent_list": {
+				"type": "object",
+				"properties": {
+					"total": {
+						"type": "integer"
+					},
+					"result": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"news_title": {
+									"type": "string",
+									"description": "新闻标题（事件名称）",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"event_type": {
+									"type": "string",
+									"description": "事件类型",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"event_time": {
+									"type": "string",
+									"description": "事件时间",
+									"mock": {
+										"mock": "@date"
+									}
+								},
+								"joiner": {
+									"type": "string",
+									"description": "参与者名称",
+									"mock": {
+										"mock": "@cname"
+									}
+								},
+								"address": {
+									"type": "string",
+									"description": "四川省成都市。。。",
+									"mock": {
+										"mock": "@region"
+									}
+								}
+							},
+							"required": [
+								"news_title",
+								"event_type",
+								"event_time",
+								"joiner",
+								"address"
+							]
+						},
+						"minItems": 5,
+						"maxItems": 10
+					}
+				},
+				"required": [
+					"total",
+					"result"
+				]
+			},
+			"ResGetApiV1NewsGraph": {
+				"type": "object",
+				"properties": {
+					"nodes": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"title": "节点ID",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"name": {
+									"type": "string",
+									"title": "节点名称",
+									"mock": {
+										"mock": "@cname"
+									}
+								},
+								"code": {
+									"type": "string",
+									"title": "节点编码",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"label": {
+									"type": "string",
+									"title": "节点类型",
+									"description": "事件 参与者 地点",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"event_id": {
+									"type": "string",
+									"title": "事件ID",
+									"description": "label为事件时才返回此字段",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"event_time": {
+									"type": "string",
+									"title": "事件时间",
+									"description": "label为事件时才返回此字段",
+									"mock": {
+										"mock": "@date"
+									}
+								},
+								"event_type": {
+									"type": "string",
+									"title": "事件类型",
+									"description": "label为事件时才返回此字段",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"attributes": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"key": {
+												"type": "string",
+												"title": "属性名称",
+												"mock": {
+													"mock": "@ctitle"
+												}
+											},
+											"value": {
+												"type": "string",
+												"title": "属性内容",
+												"mock": {
+													"mock": "@ctitle"
+												}
+											}
+										}
+									},
+									"title": "属性列表"
+								}
+							},
+							"required": []
+						},
+						"title": "节点列表"
+					},
+					"links": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"title": "边ID",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"source": {
+									"type": "string",
+									"title": "起点",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"target": {
+									"type": "string",
+									"title": "目标",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"label": {
+									"type": "string",
+									"title": "边类别",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"attributes": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"key": {
+												"type": "string",
+												"title": "属性名称",
+												"mock": {
+													"mock": "@ctitle"
+												}
+											},
+											"value": {
+												"type": "string",
+												"title": "属性内容",
+												"mock": {
+													"mock": "@ctitle"
+												}
+											}
+										}
+									},
+									"title": "属性列表"
+								}
+							},
+							"required": []
+						},
+						"title": "边列表"
+					}
+				},
+				"required": [
+					"nodes",
+					"links"
+				]
+			},
+			"ResGetApiV1NewsDetail": {
+				"type": "object",
+				"properties": {
+					"origin_pdf_path": {
+						"type": "string",
+						"description": "原文pdf地址，doc会转为pdf",
+						"mock": {
+							"mock": "https://www.baidu.com"
+						}
+					},
+					"event": {
+						"type": "object",
+						"properties": {
+							"event_id": {
+								"type": "string",
+								"description": "事件id，更新时候使用传入此id",
+								"mock": {
+									"mock": "@string"
+								}
+							},
+							"abstract": {
+								"type": "string",
+								"description": "摘要"
+							},
+							"title": {
+								"type": "string",
+								"description": "事件名称"
+							},
+							"joiner": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"description": "参与者名称",
+											"mock": {
+												"mock": "@cname"
+											}
+										},
+										"country": {
+											"type": "string",
+											"mock": {
+												"mock": "@county"
+											}
+										},
+										"country_code": {
+											"type": "string",
+											"mock": {
+												"mock": "@integer"
+											}
+										},
+										"org_name": {
+											"type": "string",
+											"mock": {
+												"mock": "@name"
+											}
+										},
+										"org_code": {
+											"type": "string",
+											"mock": {
+												"mock": "@integer"
+											}
+										},
+										"longitude": {
+											"type": "number",
+											"mock": {
+												"mock": "@natural"
+											}
+										},
+										"latitude": {
+											"type": "number",
+											"mock": {
+												"mock": "@natural"
+											}
+										},
+										"role": {
+											"type": "string",
+											"mock": {
+												"mock": "@cname"
+											}
+										},
+										"full_address": {
+											"type": "string",
+											"mock": {
+												"mock": "@region"
+											}
+										}
+									},
+									"required": [
+										"name",
+										"country",
+										"country_code",
+										"org_name",
+										"org_code",
+										"longitude",
+										"latitude",
+										"full_address",
+										"role"
+									]
+								},
+								"description": "参与者",
+								"minItems": 5,
+								"maxItems": 10
+							},
+							"theme": {
+								"type": "string",
+								"description": "主题（领域知识）",
+								"mock": {
+									"mock": "@ctitle"
+								}
+							},
+							"event_type": {
+								"type": "string",
+								"description": "事件类型",
+								"mock": {
+									"mock": "@string"
+								}
+							},
+							"emotion_positive": {
+								"type": "number",
+								"description": "情感积极得分",
+								"minimum": 0,
+								"maximum": 1,
+								"exclusiveMinimum": false,
+								"mock": {
+									"mock": "0.23"
+								}
+							},
+							"origin_event_time": {
+								"type": "string",
+								"description": "原始的事件时间，如今天",
+								"title": "今天"
+							},
+							"event_time": {
+								"type": "string",
+								"description": "事件时间yyyy-mm-dd",
+								"title": "2020-02-29",
+								"mock": {
+									"mock": "@date"
+								}
+							},
+							"event_country": {
+								"type": "string",
+								"description": "事件发生国家",
+								"mock": {
+									"mock": "@county"
+								}
+							},
+							"event_address": {
+								"type": "string",
+								"description": "事件地址",
+								"mock": {
+									"mock": "@region"
+								}
+							},
+							"long": {
+								"type": "number",
+								"description": "经度",
+								"mock": {
+									"mock": "@natural"
+								}
+							},
+							"lat": {
+								"type": "number",
+								"description": "纬度",
+								"mock": {
+									"mock": "@natural"
+								}
+							}
+						},
+						"description": "事件详情，need_event为false时，对象为{}",
+						"required": [
+							"event_id",
+							"joiner",
+							"event_type",
+							"theme",
+							"emotion_positive",
+							"event_time",
+							"event_country",
+							"event_address",
+							"title",
+							"abstract",
+							"long",
+							"lat",
+							"origin_event_time"
+						]
+					},
+					"origin_fields": {
+						"type": "object",
+						"properties": {
+							"site_name": {
+								"type": "string",
+								"description": "网站名称",
+								"mock": {
+									"mock": "@url"
+								}
+							},
+							"id": {
+								"type": "string",
+								"description": "csv中的原始id，无实际意义。",
+								"mock": {
+									"mock": "@id"
+								}
+							},
+							"country": {
+								"type": "string",
+								"description": "网站所属国家",
+								"mock": {
+									"mock": "@county"
+								}
+							},
+							"url": {
+								"type": "string",
+								"description": "新闻url",
+								"mock": {
+									"mock": "@url"
+								}
+							},
+							"title": {
+								"type": "string",
+								"description": "新闻标题",
+								"mock": {
+									"mock": "@ctitle"
+								}
+							},
+							"publish_time": {
+								"type": "string",
+								"description": "发布时间",
+								"mock": {
+									"mock": "@datetime"
+								}
+							},
+							"abstract": {
+								"type": "string",
+								"description": "摘要",
+								"mock": {
+									"mock": "@ctitle"
+								}
+							},
+							"content": {
+								"type": "string",
+								"description": "新闻正文",
+								"mock": {
+									"mock": "@cparagraph"
+								}
+							}
+						},
+						"required": [
+							"site_name",
+							"country",
+							"abstract",
+							"publish_time",
+							"title",
+							"url",
+							"content",
+							"id"
+						],
+						"description": "实时新闻的字段"
+					},
+					"news_id": {
+						"type": "number",
+						"description": "新闻id",
+						"mock": {
+							"mock": "@id"
+						}
+					}
+				},
+				"required": [
+					"origin_pdf_path",
+					"event",
+					"origin_fields",
+					"news_id"
+				]
+			}
+		},
+		"email": {
+			"ResGetApiV1EmailList": {
+				"type": "object",
+				"properties": {
+					"email_list": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"send_time": {
+									"type": "string",
+									"mock": {
+										"mock": "@datetime"
+									}
+								},
+								"title": {
+									"type": "string",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"filename": {
+									"type": "string",
+									"description": "文件名",
+									"mock": {
+										"mock": "@ctitle"
+									}
+								},
+								"id": {
+									"type": "integer",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"process_status": {
+									"type": "integer",
+									"description": "细分状态，枚举1：队列中，2：执行中、3：暂停中",
+									"enum": [
+										1,
+										2,
+										3
+									]
+								},
+								"save_es_time": {
+									"type": "string",
+									"description": "入库时间",
+									"mock": {
+										"mock": "@datetime"
+									}
+								},
+								"fail_step": {
+									"type": "string",
+									"description": "失败步骤，失败原因",
+									"enum": [
+										"0",
+										"1",
+										"2",
+										"3"
+									]
+								},
+								"category": {
+									"type": "string",
+									"description": "分类"
+								}
+							},
+							"required": [
+								"send_time",
+								"title",
+								"id",
+								"filename",
+								"process_status",
+								"save_es_time",
+								"fail_step",
+								"category"
+							]
+						}
+					},
+					"total": {
+						"type": "integer",
+						"description": "总数据量",
+						"mock": {
+							"mock": "100"
+						}
+					}
+				},
+				"required": [
+					"email_list",
+					"total"
+				]
+			},
+			"ApiV1EmailDoPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"action": {
+						"type": "string",
+						"description": "动作，操作：handle（开始解析）、pause（暂停）、continue（继续）、revoke（暂不处理）、save（入库）"
+					},
+					"data_id_list": {
+						"type": "array",
+						"items": {
+							"type": "integer",
+							"description": "数据id"
+						},
+						"description": "勾选的数据id列表"
+					}
+				},
+				"required": [
+					"action",
+					"data_id_list"
+				]
+			},
+			"ResPostApiV1EmailDo": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "integer"
+					},
+					"fail": {
+						"type": "integer"
+					}
+				},
+				"required": [
+					"success",
+					"fail"
+				]
+			},
+			"ResGetApiV1EmailDetail": {
+				"type": "object",
+				"properties": {
+					"origin_content": {
+						"type": "string",
+						"description": "html原文",
+						"mock": {
+							"mock": "<p>123</p><p>222</p>"
+						}
+					},
+					"analysis_result": {
+						"type": "object",
+						"properties": {
+							"category_list": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "number",
+											"description": "分类id"
+										},
+										"name": {
+											"type": "string",
+											"description": "分类名称"
+										}
+									},
+									"required": [
+										"id",
+										"name"
+									]
+								},
+								"description": "分类id列表"
+							}
+						},
+						"description": "分析结果，当need_analysis_result为false时，对象为空对象。",
+						"required": [
+							"category_list"
+						]
+					}
+				},
+				"required": [
+					"origin_content",
+					"analysis_result"
+				]
+			},
+			"ApiV1EmailUpdate_analysis_resultPutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"email_id": {
+						"type": "string"
+					},
+					"analysis_result": {
+						"type": "object",
+						"properties": {
+							"category_id_list": {
+								"type": "array",
+								"items": {
+									"type": "number"
+								},
+								"description": "分类id列表"
+							}
+						},
+						"description": "分析结果，当need_analysis_result为false时，对象为空对象。",
+						"required": [
+							"category_id_list"
+						]
+					}
+				},
+				"required": [
+					"email_id",
+					"analysis_result"
+				]
+			},
+			"ResPostApiV1EmailUpload": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "integer",
+						"description": "成功文件数"
+					},
+					"fail": {
+						"type": "integer",
+						"description": "失败文件数"
+					}
+				},
+				"required": [
+					"success",
+					"fail"
+				]
+			}
+		},
+		"tools": {
+			"ApiV1ToolsTopicPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsTopic": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"description": "主题名称"
+								},
+								"value": {
+									"type": "number",
+									"description": "所占比例"
+								}
+							},
+							"required": [
+								"name",
+								"value"
+							]
+						}
+					}
+				},
+				"required": [
+					"result"
+				]
+			},
+			"ApiV1ToolsEventPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsEvent": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "object",
+						"properties": {
+							"abstract": {
+								"type": "string",
+								"description": "摘要"
+							},
+							"title": {
+								"type": "string",
+								"description": "事件名称"
+							},
+							"joiner": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"description": "参与者名称",
+											"mock": {
+												"mock": "@cname"
+											}
+										},
+										"country": {
+											"type": "string",
+											"mock": {
+												"mock": "@county"
+											}
+										},
+										"country_code": {
+											"type": "string",
+											"mock": {
+												"mock": "@integer"
+											}
+										},
+										"org_name": {
+											"type": "string",
+											"mock": {
+												"mock": "@name"
+											}
+										},
+										"org_code": {
+											"type": "string",
+											"mock": {
+												"mock": "@integer"
+											}
+										},
+										"longitude": {
+											"type": "number",
+											"mock": {
+												"mock": "@natural"
+											}
+										},
+										"latitude": {
+											"type": "number",
+											"mock": {
+												"mock": "@natural"
+											}
+										},
+										"role": {
+											"type": "string",
+											"mock": {
+												"mock": "@cname"
+											}
+										},
+										"full_address": {
+											"type": "string",
+											"mock": {
+												"mock": "@region"
+											}
+										}
+									},
+									"required": [
+										"name",
+										"country",
+										"country_code",
+										"org_name",
+										"org_code",
+										"longitude",
+										"latitude",
+										"full_address",
+										"role"
+									]
+								},
+								"description": "参与者",
+								"minItems": 5,
+								"maxItems": 10
+							},
+							"theme": {
+								"type": "string",
+								"description": "主题（领域知识）",
+								"mock": {
+									"mock": "@ctitle"
+								}
+							},
+							"event_type": {
+								"type": "string",
+								"description": "事件类型",
+								"mock": {
+									"mock": "@string"
+								}
+							},
+							"emotion_positive": {
+								"type": "number",
+								"description": "情感积极得分",
+								"minimum": 0,
+								"maximum": 1,
+								"exclusiveMinimum": false,
+								"mock": {
+									"mock": "0.23"
+								}
+							},
+							"origin_event_time": {
+								"type": "string",
+								"description": "原始的事件时间，如今天",
+								"title": "今天"
+							},
+							"event_time": {
+								"type": "string",
+								"description": "事件时间yyyy-mm-dd",
+								"title": "2020-02-29",
+								"mock": {
+									"mock": "@date"
+								}
+							},
+							"event_country": {
+								"type": "string",
+								"description": "事件发生国家",
+								"mock": {
+									"mock": "@county"
+								}
+							},
+							"event_address": {
+								"type": "string",
+								"description": "事件地址",
+								"mock": {
+									"mock": "@region"
+								}
+							},
+							"long": {
+								"type": "number",
+								"description": "经度",
+								"mock": {
+									"mock": "@natural"
+								}
+							},
+							"lat": {
+								"type": "number",
+								"description": "纬度",
+								"mock": {
+									"mock": "@natural"
+								}
+							}
+						},
+						"description": "事件详情，need_event为false时，对象为{}",
+						"required": [
+							"event_type",
+							"theme",
+							"emotion_positive",
+							"event_time",
+							"event_country",
+							"event_address",
+							"title",
+							"abstract",
+							"long",
+							"lat",
+							"origin_event_time",
+							"joiner"
+						]
+					}
+				},
+				"required": [
+					"result"
+				]
+			},
+			"ResPostApiV1ToolsEvent_batch": {
+				"type": "object",
+				"properties": {
+					"download_url": {
+						"type": "string",
+						"description": "全部下载（一键下载docx）"
+					}
+				},
+				"required": [
+					"download_url"
+				]
+			},
+			"ApiV1ToolsEntityPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsEntity": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"type_name": {
+									"type": "string",
+									"description": "类型名称",
+									"title": "比如时间，地点"
+								},
+								"index_list": {
+									"type": "array",
+									"items": {
+										"type": "number"
+									},
+									"description": "时间词位置列表，同实体词列表一一对应"
+								},
+								"entity_list": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									},
+									"description": "实体词列表，同index一一对应"
+								}
+							},
+							"required": [
+								"type_name",
+								"index_list",
+								"entity_list"
+							]
+						}
+					}
+				},
+				"required": [
+					"result"
+				]
+			},
+			"ApiV1ToolsSentimentPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsSentiment": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "object",
+						"properties": {
+							"positive": {
+								"type": "number"
+							},
+							"negative": {
+								"type": "number"
+							},
+							"polarity": {
+								"type": "number"
+							},
+							"tone": {
+								"type": "number"
+							}
+						},
+						"required": [
+							"positive",
+							"negative",
+							"tone",
+							"polarity"
+						]
+					}
+				},
+				"required": [
+					"result"
+				]
+			},
+			"ApiV1ToolsCategoryPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsCategory": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"description": "类别"
+								},
+								"value": {
+									"type": "number",
+									"description": "所占比例"
+								}
+							},
+							"required": [
+								"name",
+								"value"
+							]
+						}
+					}
+				},
+				"required": [
+					"result"
+				]
+			},
+			"ApiV1ToolsAbstractPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsAbstract": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "object",
+						"properties": {
+							"normal": {
+								"type": "string"
+							},
+							"rich": {
+								"type": "string"
+							},
+							"simple": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"normal",
+							"rich",
+							"simple"
+						]
+					}
+				},
+				"required": [
+					"result"
+				]
+			},
+			"ApiV1ToolsTranslatePostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string",
+						"description": "翻译原文"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsTranslate": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "string",
+						"description": "翻译结果"
+					}
+				},
+				"required": [
+					"result"
+				]
+			},
+			"ApiV1ToolsWord_frequencyPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				]
+			},
+			"ResPostApiV1ToolsWord_frequency": {
+				"type": "object",
+				"properties": {
+					"result": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"count": {
+									"type": "number",
+									"description": "次数"
+								},
+								"tag": {
+									"type": "string",
+									"description": "词语"
+								},
+								"weight": {
+									"type": "number",
+									"description": "权重"
+								}
+							},
+							"description": "具体字段见公司nlp产品词频统计",
+							"required": [
+								"count",
+								"weight",
+								"tag"
+							]
+						}
+					}
+				},
+				"required": [
+					"result"
+				]
+			}
+		},
+		"config": {
+			"ApiV1ConfigJoinerPutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "参与者名称"
+					},
+					"country": {
+						"type": "string",
+						"description": "参与者国家"
+					},
+					"country_code": {
+						"type": "string",
+						"description": "参与者国家代码"
+					},
+					"org_name": {
+						"type": "string",
+						"description": "参与者组织"
+					},
+					"org_code": {
+						"type": "string",
+						"description": "参与者组织代码"
+					},
+					"role": {
+						"type": "string",
+						"description": "参与者角色"
+					},
+					"full_address": {
+						"type": "string",
+						"description": "参与者完整地理位置"
+					},
+					"data_id": {
+						"type": "integer"
+					}
+				},
+				"required": [
+					"name",
+					"role",
+					"full_address",
+					"data_id"
+				]
+			},
+			"ApiV1ConfigJoinerPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "参与者名称"
+					},
+					"country": {
+						"type": "string",
+						"description": "参与者国家"
+					},
+					"country_code": {
+						"type": "string",
+						"description": "参与者国家代码"
+					},
+					"org_name": {
+						"type": "string",
+						"description": "参与者组织"
+					},
+					"org_code": {
+						"type": "string",
+						"description": "参与者组织代码"
+					},
+					"role": {
+						"type": "string",
+						"description": "参与者角色"
+					},
+					"full_address": {
+						"type": "string",
+						"description": "参与者完整地理位置"
+					}
+				},
+				"required": [
+					"name",
+					"full_address"
+				]
+			},
+			"ResGetApiV1ConfigJoiner": {
+				"type": "object",
+				"properties": {
+					"joiner_list": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"id": {
+									"type": "integer"
+								},
+								"country": {
+									"type": "string"
+								},
+								"country_code": {
+									"type": "string"
+								},
+								"org_name": {
+									"type": "string"
+								},
+								"org_code": {
+									"type": "string"
+								},
+								"role": {
+									"type": "string"
+								},
+								"full_address": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"name",
+								"full_address",
+								"role",
+								"org_code",
+								"org_name",
+								"country_code",
+								"country",
+								"id"
+							]
+						}
+					}
+				},
+				"required": [
+					"joiner_list"
+				]
+			},
+			"ApiV1ConfigEmail_categoryPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "分类名称"
+					}
+				},
+				"required": [
+					"name"
+				]
+			},
+			"ResGetApiV1ConfigEmail_category": {
+				"type": "object",
+				"properties": {
+					"list": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "number",
+									"mock": {
+										"mock": "@id"
+									}
+								},
+								"name": {
+									"type": "string",
+									"mock": {
+										"mock": "@cname"
+									}
+								}
+							},
+							"required": [
+								"id",
+								"name"
+							]
+						},
+						"minItems": 10,
+						"maxItems": 10
+					}
+				},
+				"required": [
+					"list"
+				]
+			},
+			"ApiV1ConfigEmail_categoryPutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"category_id": {
+						"type": "integer",
+						"description": "id"
+					},
+					"name": {
+						"type": "string",
+						"description": "新名称"
+					}
+				},
+				"required": [
+					"category_id",
+					"name"
+				]
+			},
+			"ResGetApiV1ConfigEmail_category_keywords": {
+				"type": "object",
+				"properties": {
+					"keywords": {
+						"type": "string",
+						"description": "关键词"
+					}
+				},
+				"required": [
+					"keywords"
+				]
+			},
+			"ApiV1ConfigEmail_category_keywordsPutParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"category_id": {
+						"type": "integer",
+						"description": "分类id"
+					},
+					"keywords": {
+						"type": "string",
+						"description": "关键词"
+					}
+				},
+				"required": [
+					"category_id",
+					"keywords"
+				]
+			},
+			"ApiV1ConfigNews_import_pathPostParams": {
+				"$schema": "http://json-schema.org/draft-04/schema#",
+				"type": "object",
+				"properties": {
+					"news_path": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"news_path"
+				]
+			},
+			"ResGetApiV1ConfigNews_import_path": {
+				"type": "object",
+				"properties": {
+					"path_list": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "number"
+								},
+								"path": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"id",
+								"path"
+							]
+						}
+					}
+				},
+				"required": [
+					"path_list"
+				]
+			},
+			"ApiV1ConfigNews_import_pathPutParams": {
+				"$schema": "http://json-schema.org/draft-04/schema#",
+				"type": "object",
+				"properties": {
+					"data_id": {
+						"type": "integer"
+					},
+					"path": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"data_id",
+					"path"
+				]
+			},
+			"ApiV1ConfigDictionaryPostParams": {
+				"type": "object",
+				"title": "title",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "词库名称"
+					}
+				},
+				"required": [
+					"name"
+				]
+			},
+			"ResGetApiV1ConfigDictionary": {
+				"type": "object",
+				"properties": {
+					"list": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "number"
+								},
+								"name": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"required": [
+					"list"
+				]
+			},
+			"ApiV1ConfigDictionaryPutParams": {
+				"$schema": "http://json-schema.org/draft-04/schema#",
+				"type": "object",
+				"properties": {
+					"category_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"category_id",
+					"name"
+				]
+			},
+			"ResGetApiV1ConfigDictionary_keywords": {
+				"type": "object",
+				"properties": {
+					"keywords": {
+						"type": "string"
+					}
+				}
+			},
+			"ApiV1ConfigDictionary_keywordsPutParams": {
+				"$schema": "http://json-schema.org/draft-04/schema#",
+				"type": "object",
+				"properties": {
+					"category_id": {
+						"type": "string"
+					},
+					"keywords": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"category_id",
+					"keywords"
+				]
+			}
+		}
+	}
+}

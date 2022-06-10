@@ -2,26 +2,27 @@ import fs from 'fs-extra';
 import path from 'path';
 import { program } from 'commander';
 
-import { getCliPkgJson, cwd, readJsonSync } from '@utils';
+import { getCliPkgJson, cwd, readJsonSync, printError } from '@utils';
 import { CONFIG_FILE_NAME } from './constants';
-import { ApiGenConfig } from './typings';
+import { ApiGenOptions } from './typings';
 import { runApiGen } from './core';
 
 function init(): void {
 	const config = genConfig();
+
 	initCommand(config);
 }
 
-function genConfig(): ApiGenConfig {
-	let localConfigPath = path.resolve(__dirname, `../${CONFIG_FILE_NAME}`);
-	let workingDirectoryPath = cwd(`./${CONFIG_FILE_NAME}`);
-	let isConfigExist = fs.existsSync(localConfigPath);
+function genConfig(): ApiGenOptions {
+	let cliConfigPath = path.resolve(__dirname, `../${CONFIG_FILE_NAME}`);
+	let localConfigPath = cwd(`./${CONFIG_FILE_NAME}`);
+	let isLocalConfigExist = fs.existsSync(localConfigPath);
 
-	if (!isConfigExist) {
-		genConfigFile(localConfigPath, workingDirectoryPath);
+	if (!isLocalConfigExist) {
+		genConfigFile(cliConfigPath, localConfigPath);
 	}
 
-	return readJsonSync(workingDirectoryPath);
+	return readJsonSync(localConfigPath);
 }
 
 /**
@@ -31,31 +32,34 @@ function genConfigFile(from: string, to: string) {
 	fs.copyFileSync(from, to);
 }
 
-function initCommand(config: ApiGenConfig) {
-	console.log(1);
+function initCommand(config: ApiGenOptions) {
 	const cliPkg = getCliPkgJson();
 
-	program.version(`ts-api-gen ${cliPkg.version}`, '-v, --version').usage('<command> [options]');
-	program
-		.command('generate')
-		.alias('g')
-		.description('Generate files which includes services and models')
-		.option('-i, --input <inputPath>', 'The swagger.json file URL', config.input)
-		.option('-o, --output <outputPath>', 'The root directory where the files will be generated', config.output)
-		.action((options: ApiGenConfig) => {
-			runApiGen(options);
-		});
-	console.log('process.argv: ', process.argv);
+	program.version(`${cliPkg.version}`, '-v, --version').usage('<command> [options]');
+	// program
+	// 	.command('generate')
+	// 	.alias('g')
+	// 	.description('Generate files which includes services and models')
+	// 	.option('-i, --input <inputPath>', 'The swagger.json file URL', config.input)
+	// 	.option('-o, --output <outputPath>', 'The root directory where the files will be generated', config.output)
+	// 	.action((options: ApiGenOptions) => {
+	// 		runApiGen(options);
+	// 	});
 
-	console.log(program);
-	program.parse();
-	// const options = program.opts() as ApiGenConfig;
-	// const options = {} as ApiGenConfig;
-	// runApiGen(options);
+	// program.exitOverride(); // show more details about CommandError in terminal.
 
-	if (!program.args || !program.args.length) {
-		program.help();
-	}
+	// try {
+	// 	program.parse(process.argv);
+	// } catch (err) {
+	// 	printError(err as Error);
+	// }
+
+	// if (!program.args || !program.args.length) {
+	// 	program.help();
+	// }
+
+	// TODO debug
+	runApiGen(config);
 }
 
 init();

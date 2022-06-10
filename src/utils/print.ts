@@ -1,5 +1,5 @@
-// import chalk from 'chalk';
+import chalk from 'chalk';
 
 export function printError(error: string | Error) {
-	console.error(error instanceof Error ? error.message : error);
+	console.error(chalk.red(error instanceof Error ? error.message : error));
 }
