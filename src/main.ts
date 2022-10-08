@@ -28,38 +28,38 @@ function genConfig(): ApiGenOptions {
 /**
  * Generate config file in the current working directory
  */
-function genConfigFile(from: string, to: string) {
+function genConfigFile(from: string, to: string): void {
 	fs.copyFileSync(from, to);
 }
 
-function initCommand(config: ApiGenOptions) {
+function initCommand(config: ApiGenOptions): void {
 	const cliPkg = getCliPkgJson();
 
 	program.version(`${cliPkg.version}`, '-v, --version').usage('<command> [options]');
-	// program
-	// 	.command('generate')
-	// 	.alias('g')
-	// 	.description('Generate files which includes services and models')
-	// 	.option('-i, --input <inputPath>', 'The swagger.json file URL', config.input)
-	// 	.option('-o, --output <outputPath>', 'The root directory where the files will be generated', config.output)
-	// 	.action((options: ApiGenOptions) => {
-	// 		runApiGen(options);
-	// 	});
+	program
+		.command('generate')
+		.alias('g')
+		.description('Generate files which includes services and models')
+		.option('-i, --input <inputPath>', 'The swagger.json file URL', config.input)
+		.option('-o, --output <outputPath>', 'The root directory where the files will be generated', config.output)
+		.action((options: ApiGenOptions) => {
+			runApiGen(options);
+		});
 
 	// program.exitOverride(); // show more details about CommandError in terminal.
 
-	// try {
-	// 	program.parse(process.argv);
-	// } catch (err) {
-	// 	printError(err as Error);
-	// }
+	try {
+		program.parse(process.argv);
+	} catch (err) {
+		printError(err as Error);
+	}
 
-	// if (!program.args || !program.args.length) {
-	// 	program.help();
-	// }
+	if (!program.args || !program.args.length) {
+		program.help();
+	}
 
 	// TODO debug
-	runApiGen(config);
+	// runApiGen(config);
 }
 
 init();

@@ -19,8 +19,7 @@ export function writeJsonSync(jsonUrl: string, json: object): void {
 }
 
 export function getCliPkgJson() {
-	console.log('__dirname', __dirname);
-	const pkgPath = path.resolve(__dirname, '../../package.json');
+	const pkgPath = path.resolve(__dirname, '../package.json');
 
 	return readJsonSync(pkgPath);
 }
